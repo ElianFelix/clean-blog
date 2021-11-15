@@ -43,7 +43,7 @@ app.get("/contact", (req, res) => {
   res.render("contact");
 });
 
-app.get("/post/new", (req, res) => {
+app.get("/posts/new", (req, res) => {
   res.render("create");
 });
 
@@ -52,7 +52,7 @@ app.get("/post/:id", async (req, res) => {
   res.render("post", { blogpost });
 });
 
-app.post("/post/store", async (req, res) => {
+app.post("/posts/store", async (req, res) => {
   await BlogPost.create(req.body);
   res.redirect("/");
 });
