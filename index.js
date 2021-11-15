@@ -43,13 +43,13 @@ app.get("/contact", (req, res) => {
   res.render("contact");
 });
 
+app.get("/post/new", (req, res) => {
+  res.render("create");
+});
+
 app.get("/post/:id", async (req, res) => {
   const blogpost = await BlogPost.findById(req.params.id);
   res.render("post", { blogpost });
-});
-
-app.get("/post/new", (req, res) => {
-  res.render("create");
 });
 
 app.post("/post/store", async (req, res) => {
