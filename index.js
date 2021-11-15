@@ -3,6 +3,7 @@ const path = require("path");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const BlogPost = require("./models/BlogPost");
 
 const app = new express();
 app.use(express.static("public"));
@@ -15,8 +16,23 @@ app.listen(4000, () => {
   console.log("App listening on port 4000");
 });
 
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res) => {
+  const blogposts = await BlogPost.find({});
+  console.log(blogposts);
+  const term = req.body.searchTerm;
+  res.render("index", { blogposts, term });
+});
+
+app.post("/search", async (req, res) => {
+  const blogposts = await BlogPost.find({
+    $or: [
+      { title: { $regex: req.body.searchTerm, $options: "i" } },
+      { body: { $regex: req.body.searchTerm, $options: "i" } },
+    ],
+  });
+  const term = req.body.searchTerm;
+  console.log(blogposts);
+  res.render("index", { blogposts, term });
 });
 
 app.get("/about", (req, res) => {
@@ -35,7 +51,7 @@ app.get("/post/new", (req, res) => {
   res.render("create");
 });
 
-app.post("/post/store", (req, res) => {
-  console.log(req.body);
+app.post("/post/store", async (req, res) => {
+  await BlogPost.create(req.body);
   res.redirect("/");
 });
