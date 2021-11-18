@@ -14,6 +14,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
 
+const validateMiddleWare = (req, res, next) => {
+  if (req.files == null || req.body.title == null) {
+    return res.redirect("/posts/new");
+  }
+  next();
+};
+
+app.use("/posts/store", validateMiddleWare);
+
 app.listen(4000, () => {
   console.log("App listening on port 4000");
 });
@@ -45,13 +54,13 @@ app.get("/contact", (req, res) => {
   res.render("contact");
 });
 
-app.get("/posts/new", (req, res) => {
-  res.render("create");
-});
-
 app.get("/post/:id", async (req, res) => {
   const blogpost = await BlogPost.findById(req.params.id);
   res.render("post", { blogpost });
+});
+
+app.get("/posts/new", (req, res) => {
+  res.render("create");
 });
 
 app.post("/posts/store", (req, res) => {
