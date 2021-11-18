@@ -31,7 +31,12 @@
               <!-- To make this form functional, sign up at-->
               <!-- https://startbootstrap.com/solution/contact-forms-->
               <!-- to get an API token!-->
-              <form id="contactForm" action="/posts/store" method="post">
+              <form
+                id="contactForm"
+                action="/posts/store"
+                method="post"
+                enctype="multipart/form-data"
+              >
                 <div class="form-floating">
                   <input
                     class="form-control"
@@ -52,6 +57,19 @@
                     style="height: 12rem"
                   ></textarea>
                   <label for="body">blog content body</label>
+                </div>
+
+                <br />
+                <div class="control-group">
+                  <div class="form-group floating-label-form-group controls">
+                    <label for="">Image</label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="image"
+                      name="image"
+                    />
+                  </div>
                 </div>
                 <br />
                 <!-- Submit success message-->
