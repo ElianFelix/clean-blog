@@ -14,14 +14,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(expressSession({ secret: "guitar dog" }));
 
-app.listen(4000, () => {
-  console.log("App listening on port 4000");
+global.loggedIn = null;
+
+app.use("*", (req, res, next) => {
+  loggedIn = req.session.userId;
+  next();
 });
 
 const validateMiddleware = require("./middleware/validationMiddleware");
 app.use("/posts/store", validateMiddleware);
 
 const authMiddleware = require("./middleware/authMiddleware");
+const redirectIfAuthenticatedMiddleware = require("./middleware/redirectIfAuthenticatedMiddleware");
 
 const homeController = require("./controllers/home");
 app.get("/", homeController);
@@ -39,13 +43,30 @@ const storePostController = require("./controllers/storePost");
 app.post("/posts/store", authMiddleware, storePostController);
 
 const newUserController = require("./controllers/newUser");
-app.get("/auth/register", newUserController);
+app.get("/auth/register", redirectIfAuthenticatedMiddleware, newUserController);
 
 const loginController = require("./controllers/login");
-app.get("/auth/login", loginController);
+app.get("/auth/login", redirectIfAuthenticatedMiddleware, loginController);
+
+const logoutController = require("./controllers/logout");
+app.get("/auth/logout", logoutController);
 
 const storeUserController = require("./controllers/storeUser");
-app.post("/users/register", storeUserController);
+app.post(
+  "/users/register",
+  redirectIfAuthenticatedMiddleware,
+  storeUserController
+);
 
 const loginUserController = require("./controllers/loginUser");
-app.post("/users/login", loginUserController);
+app.post(
+  "/users/login",
+  redirectIfAuthenticatedMiddleware,
+  loginUserController
+);
+
+app.use((req, res) => res.render("notfound"));
+
+app.listen(4000, () => {
+  console.log("App listening on port 4000");
+});
