@@ -3,14 +3,16 @@ const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
+const expressSession = require("express-session");
 
 const app = new express();
-app.use(express.static("public"));
+mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
 app.set("view engine", "ejs");
+app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
-mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
+app.use(expressSession({ secret: "guitar dog" }));
 
 app.listen(4000, () => {
   console.log("App listening on port 4000");
@@ -33,3 +35,15 @@ app.get("/posts/new", newPostController);
 
 const storePostController = require("./controllers/storePost");
 app.post("/posts/store", storePostController);
+
+const newUserController = require("./controllers/newUser");
+app.get("/auth/register", newUserController);
+
+const loginController = require("./controllers/login");
+app.get("/auth/login", loginController);
+
+const storeUserController = require("./controllers/storeUser");
+app.post("/users/register", storeUserController);
+
+const loginUserController = require("./controllers/loginUser");
+app.post("/users/login", loginUserController);

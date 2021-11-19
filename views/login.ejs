@@ -12,7 +12,7 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
           <div class="col-md-10 col-lg-8 col-xl-7">
             <div class="page-heading">
-              <h1>Create New Post</h1>
+              <h1>Login</h1>
             </div>
           </div>
         </div>
@@ -32,46 +32,34 @@
               <!-- https://startbootstrap.com/solution/contact-forms-->
               <!-- to get an API token!-->
               <form
-                id="contactForm"
-                action="/posts/store"
+                id="registerForm"
+                action="/users/login"
                 method="post"
                 enctype="multipart/form-data"
               >
                 <div class="form-floating">
                   <input
                     class="form-control"
-                    id="title"
+                    id="username"
                     type="text"
-                    name="title"
-                    placeholder="Enter your title..."
+                    name="username"
+                    placeholder="User Name"
                   />
-                  <label for="title">blog title</label>
+                  <label for="title">User Name</label>
                 </div>
 
                 <div class="form-floating">
-                  <textarea
+                  <input
                     class="form-control"
-                    id="body"
-                    name="body"
-                    placeholder="Enter your body here..."
-                    style="height: 12rem"
-                  ></textarea>
-                  <label for="body">blog content body</label>
+                    id="password"
+                    type="text"
+                    name="password"
+                    placeholder="Password"
+                  />
+                  <label for="body">Password</label>
                 </div>
+                <br />
 
-                <br />
-                <div class="control-group">
-                  <div class="form-group floating-label-form-group controls">
-                    <label for="">Image</label>
-                    <input
-                      type="file"
-                      class="form-control"
-                      id="image"
-                      name="image"
-                    />
-                  </div>
-                </div>
-                <br />
                 <!-- Submit success message-->
                 <!---->
                 <!-- This is what your users will see when the form-->
@@ -88,7 +76,7 @@
                   id="sendMessageButton"
                   type="submit"
                 >
-                  Send
+                  Login
                 </button>
               </form>
             </div>
