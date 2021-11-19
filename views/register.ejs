@@ -24,13 +24,15 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
           <div class="col-md-10 col-lg-8 col-xl-7">
             <div class="my-5">
-              <!-- * * * * * * * * * * * * * * *-->
-              <!-- * * SB Forms Contact Form * *-->
-              <!-- * * * * * * * * * * * * * * *-->
-              <!-- This form is pre-integrated with SB Forms.-->
-              <!-- To make this form functional, sign up at-->
-              <!-- https://startbootstrap.com/solution/contact-forms-->
-              <!-- to get an API token!-->
+              <% if (errors != null && errors.length > 0) { %>
+              <ul class="list-group">
+                <% for (let i = 0; i < errors.length; i++) { %>
+                <li class="list-group-item list-group-item-danger">
+                  <%= errors[i] %>
+                </li>
+                <% } %>
+              </ul>
+              <% } %>
               <form
                 id="registerForm"
                 action="/users/register"
@@ -44,6 +46,7 @@
                     type="text"
                     name="username"
                     placeholder="User Name"
+                    value="<%= username %>"
                   />
                   <label for="title">User Name</label>
                 </div>
@@ -55,21 +58,11 @@
                     type="text"
                     name="password"
                     placeholder="Password"
+                    value="<%= password %>"
                   />
                   <label for="body">Password</label>
                 </div>
                 <br />
-
-                <!-- Submit success message-->
-                <!---->
-                <!-- This is what your users will see when the form-->
-                <!-- has successfully submitted-->
-
-                <!-- Submit error message-->
-                <!---->
-                <!-- This is what your users will see when there is-->
-                <!-- an error submitting the form-->
-
                 <!-- Submit Button-->
                 <button
                   class="btn btn-primary text-uppercase"

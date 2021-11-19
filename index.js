@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
 const expressSession = require("express-session");
+const flash = require("connect-flash");
 
 const app = new express();
 mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(expressSession({ secret: "guitar dog" }));
+app.use(flash());
 
 global.loggedIn = null;
 
