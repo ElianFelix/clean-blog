@@ -7,7 +7,11 @@ module.exports = (req, res) => {
     path.resolve(__dirname, "..", "public/img", image.name),
     async (error) => {
       await BlogPost.create(
-        { ...req.body, image: "/img/" + image.name },
+        {
+          ...req.body,
+          image: "/img/" + image.name,
+          userid: req.session.userId,
+        },
         (error) => {
           if (error) {
             const validationErrors = Object.keys(error.errors).map(

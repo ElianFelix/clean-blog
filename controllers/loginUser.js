@@ -3,6 +3,7 @@ const User = require("../models/User.js");
 
 module.exports = (req, res) => {
   const { username, password } = req.body;
+  const credError = ["Wrong username or password"];
 
   User.findOne({ username }, (error, user) => {
     if (user) {
@@ -12,10 +13,14 @@ module.exports = (req, res) => {
           console.log(same);
           res.redirect("/");
         } else {
+          req.flash("validationErrors", credError);
+          req.flash("data", username);
           res.redirect("/auth/login");
         }
       });
     } else {
+      req.flash("validationErrors", credError);
+      req.flash("data", username);
       res.redirect("/auth/login");
     }
   });
