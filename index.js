@@ -12,18 +12,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
 
-const validateMiddleWare = (req, res, next) => {
-  if (req.files == null || req.body.title == null) {
-    return res.redirect("/posts/new");
-  }
-  next();
-};
-
-app.use("/posts/store", validateMiddleWare);
-
 app.listen(4000, () => {
   console.log("App listening on port 4000");
 });
+
+const validateMiddleware = require("./middleware/validationMiddleware");
+app.use("/posts/store", validateMiddleware);
 
 const homeController = require("./controllers/home");
 app.get("/", homeController);
