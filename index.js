@@ -21,6 +21,8 @@ app.listen(4000, () => {
 const validateMiddleware = require("./middleware/validationMiddleware");
 app.use("/posts/store", validateMiddleware);
 
+const authMiddleware = require("./middleware/authMiddleware");
+
 const homeController = require("./controllers/home");
 app.get("/", homeController);
 
@@ -31,10 +33,10 @@ const getPostController = require("./controllers/getPost");
 app.get("/post/:id", getPostController);
 
 const newPostController = require("./controllers/newPost");
-app.get("/posts/new", newPostController);
+app.get("/posts/new", authMiddleware, newPostController);
 
 const storePostController = require("./controllers/storePost");
-app.post("/posts/store", storePostController);
+app.post("/posts/store", authMiddleware, storePostController);
 
 const newUserController = require("./controllers/newUser");
 app.get("/auth/register", newUserController);
