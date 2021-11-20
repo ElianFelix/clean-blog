@@ -50,17 +50,24 @@
                   />
                   <label for="title">blog title</label>
                 </div>
-
+                <br />
                 <div class="form-floating">
                   <textarea
                     class="form-control"
                     id="body"
                     name="body"
-                    placeholder="Enter your body here..."
-                    style="height: 12rem"
                     value="<%= body %>"
                   ></textarea>
-                  <label for="body">blog content body</label>
+                  <script>
+                    $(document).ready(function () {
+                      $("#body").summernote({
+                        placeholder: "Hello bootstrap",
+                        tabsize: 2,
+                        height: 200,
+                      });
+                    });
+                  </script>
+                  <!-- <label for="body">blog content body</label> -->
                 </div>
 
                 <br />

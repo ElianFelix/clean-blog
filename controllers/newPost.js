@@ -13,6 +13,7 @@ module.exports = (req, res) => {
       errors: req.flash("validationErrors"),
       title,
       body,
+      createPost: true,
     });
   }
   res.redirect("/auth/login");
